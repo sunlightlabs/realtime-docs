@@ -35,30 +35,104 @@
         <li>
           <a href="#api-methods">API Methods</a>
           
+        </li>
+      
+        <li>
+          <a href="#new_filing">/new_filing/</a>
+          
             <ul>
               
                 <li>
-                  <a href="#api-methods/new_filing">/new_filing/</a>
+                  <a href="#new_filing/parameters">Parameters</a>
                 </li>
               
                 <li>
-                  <a href="#api-methods/independent-expenditures">/independent-expenditures/</a>
+                  <a href="#new_filing/new_filing-return-values">new_filing return values</a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+        <li>
+          <a href="#independent-expenditures">/independent-expenditures/</a>
+          
+            <ul>
+              
+                <li>
+                  <a href="#independent-expenditures/parameters">Parameters</a>
                 </li>
               
                 <li>
-                  <a href="#api-methods/districts">/districts/</a>
+                  <a href="#independent-expenditures/independent-expenditures-return-values">independent-expenditures return values</a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+        <li>
+          <a href="#districts">/districts/</a>
+          
+            <ul>
+              
+                <li>
+                  <a href="#districts/parameters">Parameters</a>
                 </li>
               
                 <li>
-                  <a href="#api-methods/candidates">/candidates/</a>
+                  <a href="#districts/districts-return-values">districts return values</a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+        <li>
+          <a href="#candidates">/candidates/</a>
+          
+            <ul>
+              
+                <li>
+                  <a href="#candidates/parameters">Parameters</a>
                 </li>
               
                 <li>
-                  <a href="#api-methods/committee">/committee/</a>
+                  <a href="#candidates/candidates-return-values">candidates return values</a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+        <li>
+          <a href="#committee">/committee/</a>
+          
+            <ul>
+              
+                <li>
+                  <a href="#committee/parameters">Parameters</a>
                 </li>
               
                 <li>
-                  <a href="#api-methods/outside-spenders">/outside-spenders/</a>
+                  <a href="#committee/committee-return-values">committee return values</a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
+        <li>
+          <a href="#outside-spenders">/outside-spenders/</a>
+          
+            <ul>
+              
+                <li>
+                  <a href="#outside-spenders/parameters">Parameters</a>
+                </li>
+              
+                <li>
+                  <a href="#outside-spenders/outside-spenders-return-values">outside-spenders return values</a>
                 </li>
               
             </ul>
@@ -95,9 +169,9 @@ types</a> are described below.</p>
 <p>All json API calls can be given a <code>page</code> parameter to dictate the page number of the results and <code>page_size</code> parameters. </p>
 <p><a id="methods"></a></p>
 <h2 id='api-methods' id="api-methods">API Methods</h2 id='api-methods'>
-<h3 id='api-methods/new_filing' id="-new_filing-">/new_filing/</h3 id='api-methods/new_filing'>
+<h2 id='new_filing' id="-new_filing-">/new_filing/</h2 id='new_filing'>
 <p>Return summary info about electronic FEC filings </p>
-<h4 id="parameters">Parameters</h4>
+<h3 id='new_filing/parameters' id="parameters">Parameters</h3 id='new_filing/parameters'>
 <p><code>format</code> : The format of the returned data. Default is json.</p>
 <p><code>page</code> : The page number of results to return. Default is 1. </p>
 <p><code>page_size</code> : The number of page results to return. for json, the default is 100 and the maximum is 100. This parameter is ignored for csv downloads, which return all matching rows, with a limit of 2000 total rows returned.</p>
@@ -111,7 +185,7 @@ types</a> are described below.</p>
 <p><code>time_range</code> : Only show reports received within one of the following time ranges: today, in the last seven days, or at any time in this cycle.</p>
 <p><code>report_type</code> : The type of report to include</p>
 <p><code>is_superceded</code> : When an amended version of an older filing is received we consider the original to have been superseded. When set to false, show only the most recent versions of an electronic filing; when set to True, show only original filings which have since been amended.</p>
-<h4 id="new_filing-return-values">new_filing return values</h4>
+<h3 id='new_filing/new_filing-return-values' id="new_filing-return-values">new_filing return values</h3 id='new_filing/new_filing-return-values'>
 <p><code>fec_id</code> : The FEC id of the committee filing this report</p>
 <p><code>committee_name</code> : The committee&#39;s name as reported to the FEC</p>
 <p><code>filing_number</code> : The numeric filing number assigned to this electronic filing by the FEC</p>
@@ -134,9 +208,9 @@ types</a> are described below.</p>
 <p><code>committee_url</code> : A dictionary of the type of lines present in this report by schedule. </p>
 <p><code>process_time_formatted</code> : A dictionary of the type of lines present in this report by schedule. </p>
 <p><code>is_superceded</code> : Is this filing superceded by another filing, either a later amendment, or a periodic filing? This should be false for data returned through the API.</p>
-<h3 id='api-methods/independent-expenditures' id="-independent-expenditures-">/independent-expenditures/</h3 id='api-methods/independent-expenditures'>
+<h2 id='independent-expenditures' id="-independent-expenditures-">/independent-expenditures/</h2 id='independent-expenditures'>
 <p>Return information about independent expenditures reported to the FEC. Independent expenditures are campaign spending by outside groups that are not made in coordination with the candidate, but support or oppose someone running for office. They must be reported within 24 or 48 hours. Any domestic entity can make an independent expenditure in any amount they want, including corporations, unions and nonprofits. </p>
-<h4 id="parameters">Parameters</h4>
+<h3 id='independent-expenditures/parameters' id="parameters">Parameters</h3 id='independent-expenditures/parameters'>
 <p><code>format</code> : The format of the returned data. Default is json.</p>
 <p><code>page</code> : The page number of results to return. Default is 1. </p>
 <p><code>page_size</code> : The number of page results to return. for json, the default is 100 and the maximum is 100. This parameter is ignored for csv downloads, which return all matching rows, with a limit of 2000 total rows returned.</p>
@@ -149,7 +223,7 @@ types</a> are described below.</p>
 <p><code>candidate_office_checked</code> : A one-digit code for the office the candidate targeted by the expenditure is seeking: &#39;H&#39; for House or &#39;S&#39; for Senate.</p>
 <p><code>candidate_district_checked</code> : A two digit code showing the district number of house candidates only. The first district would be &#39;01&#39;. States with at-large house districts, e.g. North Dakota, are assigned &#39;00&#39;. This number is not reliably assigned to senate districts; sometimes a &#39;00&#39; is used, sometimes the value is null</p>
 <p><code>candidate_party_checked</code> : A one digit code representing the party of the candidate targeted by the expenditure: &#39;D&#39; for Democrat and &#39;R&#39; for Republican. This value is often missing for third party candidates.</p>
-<h4 id="independent-expenditures-return-values">independent-expenditures return values</h4>
+<h3 id='independent-expenditures/independent-expenditures-return-values' id="independent-expenditures-return-values">independent-expenditures return values</h3 id='independent-expenditures/independent-expenditures-return-values'>
 <p><code>form_type</code> : The type of from this expenditure was reported on. See more about <a href="http://www.fec.gov/info/forms.shtml">FEC forms</a>.</p>
 <p><code>superceded_by_amendment</code> :  Is this filing superceded by another filing, either a later amendment, or a periodic filing? This should be false for data returned through the API.</p>
 <p><code>candidate_id_checked</code> : The FEC id of the candidate targeted by this independent expenditure. This is added whenever possible from expenditures that are missing it.</p>
@@ -183,9 +257,9 @@ types</a> are described below.</p>
 <p><code>committee_url</code> : The URL to the committees page</p>
 <p><code>candidate_url</code> : The URL to the candidates page</p>
 <p><code>short_office</code> : A short version of the district</p>
-<h3 id='api-methods/districts' id="-districts-">/districts/</h3 id='api-methods/districts'>
+<h2 id='districts' id="-districts-">/districts/</h2 id='districts'>
 <p>Summarize total spending by congressional district, including candidate spending and independent expenditures. Electioneering and &#39;communication cost&#39; (promotion of candidates to members of a corporation or assocation) is not included. Also useful for retrieving IDs. </p>
-<h4 id="parameters">Parameters</h4>
+<h3 id='districts/parameters' id="parameters">Parameters</h3 id='districts/parameters'>
 <p><code>format</code> : The format of the returned data. Default is json.</p>
 <p><code>page</code> : The page number of results to return. Default is 1. </p>
 <p><code>page_size</code> : The number of page results to return. for json, the default is 100 and the maximum is 100. This parameter is ignored for csv downloads, which return all matching rows, with a limit of 2000 total rows returned.</p>
@@ -194,7 +268,7 @@ types</a> are described below.</p>
 <p><code>office_district</code> : A two digit code showing the district number of house districts only. The first district would be &#39;01&#39;. States with at-large house districts, e.g. North Dakota, are assigned &#39;00&#39;. This number is not reliably assigned to senate districts; sometimes a &#39;00&#39; is used, sometimes the value is null</p>
 <p><code>term_class</code> : The term class used to describe Senate seats&#39; election cycle. Term class 1 is up in 2018, 2 is up in 2014 and 3 is up in 2016. This value is null for house districts.</p>
 <p><code>incumbent_party</code> : A one letter code for the incumbent&#39;s political party: &#39;D&#39; for Democrat and &#39;R&#39; for Republican. Angus King, independent Senator of Maine, is listed as &#39;I&#39;</p>
-<h4 id="districts-return-values">districts return values</h4>
+<h3 id='districts/districts-return-values' id="districts-return-values">districts return values</h3 id='districts/districts-return-values'>
 <p><code>id</code> : An internal district id</p>
 <p><code>district_url</code> : The URL to this district&#39;s page</p>
 <p><code>cycle</code> : The even-numbered year that ends a two-year cycle.</p>
@@ -214,9 +288,9 @@ types</a> are described below.</p>
 <p><code>total_spending</code> : Total candidate spending plus independent expenditures made in this race. This doesn&#39;t include several lesser spending categories: communication cost (paid communication from a union or corporation targeting their own members); coordinated expenditures made by a national party committee that aren&#39;t reported as inkind contributions; electioneering communications (which may target multiple candidates at once.)</p>
 <p><code>rothenberg_rating_id</code> : The code used by Rothenberg.</p>
 <p><code>rothenberg_rating_text</code> : The <a href="http://rothenbergpoliticalreport.com/">Rothenberg Political Report&#39;s</a> rating of this district</p>
-<h3 id='api-methods/candidates' id="-candidates-">/candidates/</h3 id='api-methods/candidates'>
+<h2 id='candidates' id="-candidates-">/candidates/</h2 id='candidates'>
 <p>Returns information about candidates for federal office </p>
-<h4 id="parameters">Parameters</h4>
+<h3 id='candidates/parameters' id="parameters">Parameters</h3 id='candidates/parameters'>
 <p><code>format</code> : The format of the returned data. Default is json.</p>
 <p><code>page</code> : The page number of results to return. Default is 1. </p>
 <p><code>page_size</code> : The number of page results to return. for json, the default is 100 and the maximum is 100. This parameter is ignored for csv downloads, which return all matching rows, with a limit of 2000 total rows returned.</p>
@@ -228,7 +302,7 @@ types</a> are described below.</p>
 <p><code>district</code> : An internal district id. Can be retrieved from the districts endpoint.</p>
 <p><code>party</code> : A one letter code for the incumbent&#39;s political party: &#39;D&#39; for Democrat and &#39;R&#39; for Republican. Angus King, independent Senator of Maine, is listed as &#39;I&#39;. This value is often missing for third party candidates.</p>
 <p><code>is_incumbent</code> : Is the candidate an incumbent?</p>
-<h4 id="candidates-return-values">candidates return values</h4>
+<h3 id='candidates/candidates-return-values' id="candidates-return-values">candidates return values</h3 id='candidates/candidates-return-values'>
 <p>A candidate is a person running for a particular office, e.g. Joe Smith for Senate. If Joe Smith is currently a member of the house, receipts by his house committee will not be counted towards his senate campaign (until they are transferred to an candidate committee authorized to support his senate bid).</p>
 <p><code>name</code> : Incumbent name</p>
 <p><code>fec_id</code> : FEC candidate id</p>
@@ -258,9 +332,9 @@ types</a> are described below.</p>
 <p><code>cash_on_hand_date</code> : The end of the most recent reporting period; the day that the cash on hand is reported on.</p>
 <p><code>district</code> : The candidate district.</p>
 <p><code>outstanding_loans</code> : </p>
-<h3 id='api-methods/committee' id="-committee-">/committee/</h3 id='api-methods/committee'>
+<h2 id='committee' id="-committee-">/committee/</h2 id='committee'>
 <p>Return summary information about a nonprofit that reports spending to the FEC or a PAC, including candidate committees, leadership PACs, joint fundraising committees, super PACs, hybrid super PACs party committees, corporate pacs, etc </p>
-<h4 id="parameters">Parameters</h4>
+<h3 id='committee/parameters' id="parameters">Parameters</h3 id='committee/parameters'>
 <p><code>format</code> : The format of the returned data. Default is json.</p>
 <p><code>page</code> : The page number of results to return. Default is 1. </p>
 <p><code>page_size</code> : The number of page results to return. for json, the default is 100 and the maximum is 100. This parameter is ignored for csv downloads, which return all matching rows, with a limit of 2000 total rows returned.</p>
@@ -269,7 +343,7 @@ types</a> are described below.</p>
 <p><code>min_raised</code> : The minimum amount reported as having been raised by the committee during the 2014 cycle.</p>
 <p><code>min_spent</code> : The minimum amount reported as having been spent by the committee during the 2014 cycle.</p>
 <p><code>min_coh</code> : The minimum cash on hand reported in the committee&#39;s most recent periodic filing.</p>
-<h4 id="committee-return-values">committee return values</h4>
+<h3 id='committee/committee-return-values' id="committee-return-values">committee return values</h3 id='committee/committee-return-values'>
 <p><code>fec_id</code> : The FEC id of the filing committee</p>
 <p><code>name</code> : The committee name.</p>
 <p><code>total_receipts</code> : Total receipts for this committee ceived during the entire cycle. </p>
@@ -284,16 +358,16 @@ types</a> are described below.</p>
 <p><code>display_type</code> : The office of the candidate that this committee supports. Not all committees support candidates.</p>
 <p><code>committee_url</code> : The office of the candidate that this committee supports. Not all committees support candidates.</p>
 <p><code>political_orientation</code> : The political orientation of the group, as coded by sunlight algorithms / researchers. This is only added for groups making independent expenditures.</p>
-<h3 id='api-methods/outside-spenders' id="-outside-spenders-">/outside-spenders/</h3 id='api-methods/outside-spenders'>
+<h2 id='outside-spenders' id="-outside-spenders-">/outside-spenders/</h2 id='outside-spenders'>
 <p>Return summary information about any outside spending group, including non-committees (which are typically nonprofits, but may include individuals, LLC&#39;s, corporations or unions) </p>
-<h4 id="parameters">Parameters</h4>
+<h3 id='outside-spenders/parameters' id="parameters">Parameters</h3 id='outside-spenders/parameters'>
 <p><code>format</code> : The format of the returned data. Default is json.</p>
 <p><code>page</code> : The page number of results to return. Default is 1. </p>
 <p><code>page_size</code> : The number of page results to return. for json, the default is 100 and the maximum is 100. This parameter is ignored for csv downloads, which return all matching rows, with a limit of 2000 total rows returned.</p>
 <p><code>ctype</code> : The FEC committee type. See more about committee types at the top of the page. Note that only some committee types are permitted to make independent expenditures.</p>
 <p><code>fec_id</code> : The FEC id of the committee by the independent expenditure. This is a nine-character code that begins with &#39;C&#39;.</p>
 <p><code>min_ies</code> : The minimum amount reported as having been spent by the committee on independent expenditures during the 2014 cycle.</p>
-<h4 id="outside-spenders-return-values">outside-spenders return values</h4>
+<h3 id='outside-spenders/outside-spenders-return-values' id="outside-spenders-return-values">outside-spenders return values</h3 id='outside-spenders/outside-spenders-return-values'>
 <p><code>fec_id</code> : The FEC id of the filing committee</p>
 <p><code>name</code> : The committee name.</p>
 <p><code>total_receipts</code> : Total receipts for this committee ceived during the entire cycle. </p>
