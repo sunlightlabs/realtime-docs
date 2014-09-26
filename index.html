@@ -27,6 +27,44 @@
           
         </li>
       
+        <li>
+          <a href="#formats">Formats</a>
+          
+        </li>
+      
+        <li>
+          <a href="#api-methods">API Methods</a>
+          
+            <ul>
+              
+                <li>
+                  <a href="#api-methods/new_filing">/new_filing/</a>
+                </li>
+              
+                <li>
+                  <a href="#api-methods/independent-expenditures">/independent-expenditures/</a>
+                </li>
+              
+                <li>
+                  <a href="#api-methods/districts">/districts/</a>
+                </li>
+              
+                <li>
+                  <a href="#api-methods/candidates">/candidates/</a>
+                </li>
+              
+                <li>
+                  <a href="#api-methods/committee">/committee/</a>
+                </li>
+              
+                <li>
+                  <a href="#api-methods/outside-spenders">/outside-spenders/</a>
+                </li>
+              
+            </ul>
+          
+        </li>
+      
     </ul>
     
     
@@ -44,6 +82,237 @@ require an active <a href="http://services.sunlightlabs.com/accounts/register/">
 key</a>. For instance, a call
 to  would look like <code>/api/new_filing/?format=json&amp;apikey=[API key]</code>. API <a href="#methods">methods</a> and <a href="#return_types">return
 types</a> are described below.</p>
+<p>An interactive page that allows you to try and test live api calls is available <a href="http://tryit.sunlightfoundation.com/realtime/">here</a>. </p>
+<h2 id='formats' id="formats">Formats</h2 id='formats'>
+<p>The API returns results in &#39;json&#39; or &#39;csv&#39; formats. Json results are paginated and return a maximum of 100 results per page. The csv results are not paginated--only a single page of csv results is returned--and the number of rows is capped at 2,000. For larger result sets, see the <a href="http://realtime.influenceexplorer.com/download-index/">downloads page</a>. CSV results include a header row.</p>
+<p>When the format is &#39;json&#39;, return objects contain top-level keys: &#39;count&#39; showing the total number of objects that match the query; &#39;next&#39;, a url for the next page of results; &#39;previous&#39; for the previous page of results. The actual result objects are returned in the &#39;results&#39; array.  </p>
+<pre><code>{
+<span class="string">"count"</span>: <span class="number">88887</span>,
+<span class="string">"next"</span>: <span class="string">"http://realtime.influenceexplorer.com/api/new_filing/?page=2&amp;page_size=10&amp;format=json&amp;apikey=[APIKEY]"</span>,
+<span class="string">"previous"</span>: <span class="keyword">null</span>,
+<span class="string">"results"</span>: [
+    { …</code></pre>
+<p>All json API calls can be given a <code>page</code> parameter to dictate the page number of the results and <code>page_size</code> parameters. </p>
+<p><a id="methods"></a></p>
+<h2 id='api-methods' id="api-methods">API Methods</h2 id='api-methods'>
+<h3 id='api-methods/new_filing' id="-new_filing-">/new_filing/</h3 id='api-methods/new_filing'>
+<p>Return summary info about electronic FEC filings </p>
+<h4 id="parameters">Parameters</h4>
+<p><code>format</code> : The format of the returned data. Default is json.</p>
+<p><code>page</code> : The page number of results to return. Default is 1. </p>
+<p><code>page_size</code> : The number of page results to return. for json, the default is 100 and the maximum is 100. This parameter is ignored for csv downloads, which return all matching rows, with a limit of 2000 total rows returned.</p>
+<p><code>candidate_id</code> : The FEC&#39;s id for the candidate connected to this committee. Only authorized committees are connected to candidates; leadership pacs are unconnected.</p>
+<p><code>committee_class</code> : The one letter code that describes the type of committee (see the committee reference above). Multiple committee types are allowed--a search for house and senate candidate committees would use HS, for instance.</p>
+<p><code>min_coh</code> : The minimum cash on hand of a report to include. Not all electronic reports include a cash on hand, so using this option will exclude all of those that do not report this figure.</p>
+<p><code>min_raised</code> : The minimum money raised. Not all electronic reports include an amount raised, so using this option will exclude all of those that do not report this figure.</p>
+<p><code>min_spent</code> : The minimum money spent. Not all electronic reports include an amount spent, so using this option will exclude all of those that do not report this figure.</p>
+<p><code>period_type</code> : The type of periodic report to include--could be monthly, quarterly or semiannual. The value includes the type; M for monthly, Q for quarterly, and S for semiannually and the period number; so a second quarter report would be Q2 and a monthly report covering August would be M8. Using this option will only return periodic reports.</p>
+<p><code>year_covered</code> : The calendar year that a periodic report covers. Non-periodic reports that do not cover a particular time period will be excluded.</p>
+<p><code>time_range</code> : Only show reports received within one of the following time ranges: today, in the last seven days, or at any time in this cycle.</p>
+<p><code>report_type</code> : The type of report to include</p>
+<p><code>is_superceded</code> : When an amended version of an older filing is received we consider the original to have been superseded. When set to false, show only the most recent versions of an electronic filing; when set to True, show only original filings which have since been amended.</p>
+<h4 id="new_filing-return-values">new_filing return values</h4>
+<p><code>fec_id</code> : The FEC id of the committee filing this report</p>
+<p><code>committee_name</code> : The committee&#39;s name as reported to the FEC</p>
+<p><code>filing_number</code> : The numeric filing number assigned to this electronic filing by the FEC</p>
+<p><code>form_type</code> : The type of form used.</p>
+<p><code>filed_date</code> : The date that this filing was processed</p>
+<p><code>coverage_from_date</code> : The start of the reporting period that this filing covers. Not all forms list this.</p>
+<p><code>coverage_to_date</code> : The end of the reporting period that this filing covers. Not all forms include this</p>
+<p><code>is_superpac</code> : Is this group a super PAC?</p>
+<p><code>committee_designation</code> : See the FEC&#39;s <a href="http://www.fec.gov/finance/disclosure/metadata/DataDictionaryCommitteeMaster.shtml">committee designations</a></p>
+<p><code>committee_type</code> : See the FEC&#39;s <a href="http://www.fec.gov/finance/disclosure/metadata/CommitteeTypeCodes.shtml">committee types</a></p>
+<p><code>coh_end</code> : The cash on hand at the end of the reporting period. </p>
+<p><code>new_loans</code> : The amount of new loans taken on by the committee during this reporting period.</p>
+<p><code>tot_raised</code> : The total amount raised in this report. This is total receipts for periodic reports.</p>
+<p><code>tot_spent</code> : The total amount spent in this report.</p>
+<p><code>lines_present</code> : A dictionary of the type of lines present in this report by schedule. </p>
+<p><code>form_name</code> : A dictionary of the type of lines present in this report by schedule. </p>
+<p><code>skeda_url</code> : A dictionary of the type of lines present in this report by schedule. </p>
+<p><code>spending_url</code> : A dictionary of the type of lines present in this report by schedule. </p>
+<p><code>absolute_url</code> : A dictionary of the type of lines present in this report by schedule. </p>
+<p><code>committee_url</code> : A dictionary of the type of lines present in this report by schedule. </p>
+<p><code>process_time_formatted</code> : A dictionary of the type of lines present in this report by schedule. </p>
+<p><code>is_superceded</code> : Is this filing superceded by another filing, either a later amendment, or a periodic filing? This should be false for data returned through the API.</p>
+<h3 id='api-methods/independent-expenditures' id="-independent-expenditures-">/independent-expenditures/</h3 id='api-methods/independent-expenditures'>
+<p>Return information about independent expenditures reported to the FEC. Independent expenditures are campaign spending by outside groups that are not made in coordination with the candidate, but support or oppose someone running for office. They must be reported within 24 or 48 hours. Any domestic entity can make an independent expenditure in any amount they want, including corporations, unions and nonprofits. </p>
+<h4 id="parameters">Parameters</h4>
+<p><code>format</code> : The format of the returned data. Default is json.</p>
+<p><code>page</code> : The page number of results to return. Default is 1. </p>
+<p><code>page_size</code> : The number of page results to return. for json, the default is 100 and the maximum is 100. This parameter is ignored for csv downloads, which return all matching rows, with a limit of 2000 total rows returned.</p>
+<p><code>support_oppose_checked</code> : Whether the expenditures supports (S) or opposes (O) a candidate.</p>
+<p><code>min_spent</code> : The minimum money spent on an independent expenditure.</p>
+<p><code>filer_committee_id_number</code> : The FEC id of the committee making the expenditure. This is a nine-character code that begins with &#39;C&#39;.</p>
+<p><code>candidate_id_checked</code> : The FEC id of the candidate targeted (either supported or opposed) by the independent expenditure. This is a nine-character code that begins with &#39;H&#39;, &#39;S&#39;, or &#39;P&#39;.</p>
+<p><code>district_checked</code> : The internal id of the district the candidate is running in. The id can be determined by using the /districts/ endpoint.</p>
+<p><code>candidate_state_checked</code> : The two-digit postal code of the state in which the candidate targeted is running, e.g. &#39;NC&#39; or &#39;OK&#39;</p>
+<p><code>candidate_office_checked</code> : A one-digit code for the office the candidate targeted by the expenditure is seeking: &#39;H&#39; for House or &#39;S&#39; for Senate.</p>
+<p><code>candidate_district_checked</code> : A two digit code showing the district number of house candidates only. The first district would be &#39;01&#39;. States with at-large house districts, e.g. North Dakota, are assigned &#39;00&#39;. This number is not reliably assigned to senate districts; sometimes a &#39;00&#39; is used, sometimes the value is null</p>
+<p><code>candidate_party_checked</code> : A one digit code representing the party of the candidate targeted by the expenditure: &#39;D&#39; for Democrat and &#39;R&#39; for Republican. This value is often missing for third party candidates.</p>
+<h4 id="independent-expenditures-return-values">independent-expenditures return values</h4>
+<p><code>form_type</code> : The type of from this expenditure was reported on. See more about <a href="http://www.fec.gov/info/forms.shtml">FEC forms</a>.</p>
+<p><code>superceded_by_amendment</code> :  Is this filing superceded by another filing, either a later amendment, or a periodic filing? This should be false for data returned through the API.</p>
+<p><code>candidate_id_checked</code> : The FEC id of the candidate targeted by this independent expenditure. This is added whenever possible from expenditures that are missing it.</p>
+<p><code>candidate_name</code> : The candidate&#39;s name.</p>
+<p><code>candidate_party_checked</code> : The candidate&#39;s party. This is added whenever possible from expenditures that are missing it.</p>
+<p><code>candidate_office_checked</code> : The candidate&#39;s office. This is added whenever possible from expenditures that are missing it.</p>
+<p><code>candidate_state_checked</code> : The state the candidate is running in. This is absent from presidential candidates. This is added whenever possible from expenditures that are missing it.</p>
+<p><code>candidate_district_checked</code> : The candidate&#39;s district, if applicable. This is added whenever possible from expenditures that are missing it.</p>
+<p><code>support_oppose_checked</code> : Whether the expenditure supports (S) or opposes (O) the candidate.</p>
+<p><code>committee_name</code> : The name of the committee making the expenditure</p>
+<p><code>transaction_id</code> : The transaction id from the original filing. These ids are unique per report, not necessarily per cycle.</p>
+<p><code>payee_organization_name</code> : The name of the organization being paid</p>
+<p><code>payee_street_1</code> : The street address of the payee</p>
+<p><code>payee_street_2</code> : The street address of the payee -- second part, if needed.</p>
+<p><code>payee_city</code> : The payee&#39;s city</p>
+<p><code>payee_state</code> : Payee state</p>
+<p><code>payee_zip</code> : Payee ZIP code</p>
+<p><code>payee_name_simplified</code> : Payee ZIP code</p>
+<p><code>election_code</code> : The code describing the election</p>
+<p><code>election_other_description</code> : Any additional description of the election</p>
+<p><code>expenditure_date_formatted</code> : The date of the expenditure</p>
+<p><code>expenditure_amount</code> : The expenditure amount</p>
+<p><code>expenditure_purpose_code</code> : The filer-entered code of the expenditure. This isn&#39;t required.</p>
+<p><code>expenditure_purpose_descrip</code> : The filer-described purpose of the expenditure</p>
+<p><code>date_signed_formatted</code> : Populated from parsing raw field</p>
+<p><code>memo_code</code> : This is an X for lines that are subitemizations</p>
+<p><code>memo_text_description</code> : A text description of unique circumstances surrounding this expenditure.</p>
+<p><code>filer_committee_id_number</code> : The FEC id of the committee making the expenditure.</p>
+<p><code>district_checked</code> : The district the expenditure was made it</p>
+<p><code>race_url</code> : The URL to the race page</p>
+<p><code>committee_url</code> : The URL to the committees page</p>
+<p><code>candidate_url</code> : The URL to the candidates page</p>
+<p><code>short_office</code> : A short version of the district</p>
+<h3 id='api-methods/districts' id="-districts-">/districts/</h3 id='api-methods/districts'>
+<p>Summarize total spending by congressional district, including candidate spending and independent expenditures. Electioneering and &#39;communication cost&#39; (promotion of candidates to members of a corporation or assocation) is not included. Also useful for retrieving IDs. </p>
+<h4 id="parameters">Parameters</h4>
+<p><code>format</code> : The format of the returned data. Default is json.</p>
+<p><code>page</code> : The page number of results to return. Default is 1. </p>
+<p><code>page_size</code> : The number of page results to return. for json, the default is 100 and the maximum is 100. This parameter is ignored for csv downloads, which return all matching rows, with a limit of 2000 total rows returned.</p>
+<p><code>state</code> : The two-letter postal code for the state where the district is located, e.g. &#39;AK&#39; or &#39;DE&#39;.</p>
+<p><code>office</code> : A one-digit code for the district&#39;s office: &#39;H&#39; for House or &#39;S&#39; for Senate.</p>
+<p><code>office_district</code> : A two digit code showing the district number of house districts only. The first district would be &#39;01&#39;. States with at-large house districts, e.g. North Dakota, are assigned &#39;00&#39;. This number is not reliably assigned to senate districts; sometimes a &#39;00&#39; is used, sometimes the value is null</p>
+<p><code>term_class</code> : The term class used to describe Senate seats&#39; election cycle. Term class 1 is up in 2018, 2 is up in 2014 and 3 is up in 2016. This value is null for house districts.</p>
+<p><code>incumbent_party</code> : A one letter code for the incumbent&#39;s political party: &#39;D&#39; for Democrat and &#39;R&#39; for Republican. Angus King, independent Senator of Maine, is listed as &#39;I&#39;</p>
+<h4 id="districts-return-values">districts return values</h4>
+<p><code>id</code> : An internal district id</p>
+<p><code>district_url</code> : The URL to this district&#39;s page</p>
+<p><code>cycle</code> : The even-numbered year that ends a two-year cycle.</p>
+<p><code>state</code> : The district&#39;s state</p>
+<p><code>office</code> : &#39;H&#39; for House, &#39;S&#39; for Senate, &#39;P&#39; for President</p>
+<p><code>office_district</code> : &#39;00&#39; for at-large congress; null for senate, president</p>
+<p><code>term_class</code> : 1,2 or 3. Pulled from US Congress repo. Only applies to senators.</p>
+<p><code>incumbent_name</code> : The incumbent name</p>
+<p><code>incumbent_party</code> : Simplified party: D for Dem, DFL etc; R for R</p>
+<p><code>next_election_date</code> : Date of the next eelction</p>
+<p><code>next_election_code</code> : A code for the next election type</p>
+<p><code>next_election</code> : A text version of the next election</p>
+<p><code>open_seat</code> : Is the incumbent stepping down?</p>
+<p><code>candidate_raised</code> : Total amount raised by candidates who&#39;ve run in this district during the cycle. Doesn&#39;t include incumbents who are not seeking reelection.</p>
+<p><code>candidate_spending</code> : Total amount spent by candidates who&#39;ve run in this district during the cycle. Doesn&#39;t include incumbents who are not seeking reelection.</p>
+<p><code>outside_spending</code> : Total amount of independent expenditures for or against candidates in this district, not including incumbents who are not seeking reelection.</p>
+<p><code>total_spending</code> : Total candidate spending plus independent expenditures made in this race. This doesn&#39;t include several lesser spending categories: communication cost (paid communication from a union or corporation targeting their own members); coordinated expenditures made by a national party committee that aren&#39;t reported as inkind contributions; electioneering communications (which may target multiple candidates at once.)</p>
+<p><code>rothenberg_rating_id</code> : The code used by Rothenberg.</p>
+<p><code>rothenberg_rating_text</code> : The <a href="http://rothenbergpoliticalreport.com/">Rothenberg Political Report&#39;s</a> rating of this district</p>
+<h3 id='api-methods/candidates' id="-candidates-">/candidates/</h3 id='api-methods/candidates'>
+<p>Returns information about candidates for federal office </p>
+<h4 id="parameters">Parameters</h4>
+<p><code>format</code> : The format of the returned data. Default is json.</p>
+<p><code>page</code> : The page number of results to return. Default is 1. </p>
+<p><code>page_size</code> : The number of page results to return. for json, the default is 100 and the maximum is 100. This parameter is ignored for csv downloads, which return all matching rows, with a limit of 2000 total rows returned.</p>
+<p><code>fec_id</code> : The FEC id of the candidate by the independent expenditure. This is a nine-character code that begins with &#39;H&#39;, &#39;S&#39;, or &#39;P&#39;.</p>
+<p><code>state</code> : The two-letter postal code for the state where the candidate is running, e.g. &#39;AK&#39; or &#39;DE&#39;.</p>
+<p><code>office</code> : A one-digit code for the candidate&#39;s office: &#39;H&#39; for House or &#39;S&#39; for Senate.</p>
+<p><code>office_district</code> : A two digit code showing the district number of house districts only. The first district would be &#39;01&#39;. States with at-large house districts, e.g. North Dakota, are assigned &#39;00&#39;. This number is not reliably assigned to senate districts; sometimes a &#39;00&#39; is used, sometimes the value is null</p>
+<p><code>term_class</code> : The term class used to describe Senate seats&#39; election cycle. Term class 1 is up in 2018, 2 is up in 2014 and 3 is up in 2016. This value is null for house districts.</p>
+<p><code>district</code> : An internal district id. Can be retrieved from the districts endpoint.</p>
+<p><code>party</code> : A one letter code for the incumbent&#39;s political party: &#39;D&#39; for Democrat and &#39;R&#39; for Republican. Angus King, independent Senator of Maine, is listed as &#39;I&#39;. This value is often missing for third party candidates.</p>
+<p><code>is_incumbent</code> : Is the candidate an incumbent?</p>
+<h4 id="candidates-return-values">candidates return values</h4>
+<p>A candidate is a person running for a particular office, e.g. Joe Smith for Senate. If Joe Smith is currently a member of the house, receipts by his house committee will not be counted towards his senate campaign (until they are transferred to an candidate committee authorized to support his senate bid).</p>
+<p><code>name</code> : Incumbent name</p>
+<p><code>fec_id</code> : FEC candidate id</p>
+<p><code>pcc</code> : FEC id for the candidate&#39;s primary campaign committee</p>
+<p><code>party</code> : Simplified party</p>
+<p><code>candidate_url</code> : Simplified party</p>
+<p><code>race_url</code> : Simplified party</p>
+<p><code>ie_url</code> : Simplified party</p>
+<p><code>is_incumbent</code> : Are they an incumbent? If not, they are a challenger</p>
+<p><code>cycle</code> : text cycle; even number.</p>
+<p><code>not_seeking_reelection</code> : True if they are an incumbent who is not seeking reelection.</p>
+<p><code>other_office_sought</code> : E.g. are they running for senate?</p>
+<p><code>other_fec_id</code> : If they&#39;ve declared for another federal position, what is it? This should be the <em>candidate id</em> not a committee id. </p>
+<p><code>election_year</code> : year of general election</p>
+<p><code>state</code> : The state the candidate is running in; US for president</p>
+<p><code>office</code> : The office the candidate is running for</p>
+<p><code>office_district</code> : &#39;00&#39; for at-large congress; null for senate, president</p>
+<p><code>term_class</code> : 1,2 or 3. Pulled from US Congress repo. Only applies to senators.</p>
+<p><code>candidate_status</code> : leave this blank until an election has been held--this is really a &#39;how did they lose&#39; type of field.</p>
+<p><code>total_expenditures</code> : The total independent expenditures made supporting or opposing this candidate.</p>
+<p><code>expenditures_supporting</code> : The total amount of independent expenditures made to support this candidate.</p>
+<p><code>expenditures_opposing</code> : The total amount of independent expenditures made to oppose this candidate.</p>
+<p><code>total_receipts</code> : The total receipts of this candidates authorized campaign committees. Outside groups and leadership pacs, neither of which are authorized, do not count towards this total. Money raised by joint fundraising committees is reported once it is listed as having been received by the candidates&#39; primary campaign committee. This total includes contributions of $1,000 and up as disclosed during the final 20 days of a campaign on 48-hour reports (Form F6).</p>
+<p><code>total_contributions</code> : The total of contributions reported by this candidate. </p>
+<p><code>total_disbursements</code> : The total amount of money reported as spent by this candidate&#39;s authorized committee. </p>
+<p><code>cash_on_hand</code> : The cash reported at the end of the most recent reporting period. </p>
+<p><code>cash_on_hand_date</code> : The end of the most recent reporting period; the day that the cash on hand is reported on.</p>
+<p><code>district</code> : The candidate district.</p>
+<p><code>outstanding_loans</code> : </p>
+<h3 id='api-methods/committee' id="-committee-">/committee/</h3 id='api-methods/committee'>
+<p>Return summary information about a nonprofit that reports spending to the FEC or a PAC, including candidate committees, leadership PACs, joint fundraising committees, super PACs, hybrid super PACs party committees, corporate pacs, etc </p>
+<h4 id="parameters">Parameters</h4>
+<p><code>format</code> : The format of the returned data. Default is json.</p>
+<p><code>page</code> : The page number of results to return. Default is 1. </p>
+<p><code>page_size</code> : The number of page results to return. for json, the default is 100 and the maximum is 100. This parameter is ignored for csv downloads, which return all matching rows, with a limit of 2000 total rows returned.</p>
+<p><code>ctype</code> : The FEC committee type. See more about committee types at the top of the page.</p>
+<p><code>fec_id</code> : The FEC id of the committee by the independent expenditure. This is a nine-character code that begins with &#39;C&#39;.</p>
+<p><code>min_raised</code> : The minimum amount reported as having been raised by the committee during the 2014 cycle.</p>
+<p><code>min_spent</code> : The minimum amount reported as having been spent by the committee during the 2014 cycle.</p>
+<p><code>min_coh</code> : The minimum cash on hand reported in the committee&#39;s most recent periodic filing.</p>
+<h4 id="committee-return-values">committee return values</h4>
+<p><code>fec_id</code> : The FEC id of the filing committee</p>
+<p><code>name</code> : The committee name.</p>
+<p><code>total_receipts</code> : Total receipts for this committee ceived during the entire cycle. </p>
+<p><code>total_disbursements</code> : Total disbursements by this committee ceived during the entire cycle</p>
+<p><code>outstanding_loans</code> : Total outstanding loans as of the cash_on_hand_date</p>
+<p><code>cash_on_hand</code> : Cash on hand as of the end of committee&#39;s most recent periodic report; this date appears as cash_on_hand_date</p>
+<p><code>cash_on_hand_date</code> : The end of the most recent periodic filing; the date that the cash on hand was reported as of.</p>
+<p><code>ctype</code> : The FEC defined committee type.</p>
+<p><code>candidate_office</code> : The office of the candidate that this committee supports. Not all committees support candidates.</p>
+<p><code>candidate_name</code> : The office of the candidate that this committee supports. Not all committees support candidates.</p>
+<p><code>candidate_url</code> : The office of the candidate that this committee supports. Not all committees support candidates.</p>
+<p><code>display_type</code> : The office of the candidate that this committee supports. Not all committees support candidates.</p>
+<p><code>committee_url</code> : The office of the candidate that this committee supports. Not all committees support candidates.</p>
+<p><code>political_orientation</code> : The political orientation of the group, as coded by sunlight algorithms / researchers. This is only added for groups making independent expenditures.</p>
+<h3 id='api-methods/outside-spenders' id="-outside-spenders-">/outside-spenders/</h3 id='api-methods/outside-spenders'>
+<p>Return summary information about any outside spending group, including non-committees (which are typically nonprofits, but may include individuals, LLC&#39;s, corporations or unions) </p>
+<h4 id="parameters">Parameters</h4>
+<p><code>format</code> : The format of the returned data. Default is json.</p>
+<p><code>page</code> : The page number of results to return. Default is 1. </p>
+<p><code>page_size</code> : The number of page results to return. for json, the default is 100 and the maximum is 100. This parameter is ignored for csv downloads, which return all matching rows, with a limit of 2000 total rows returned.</p>
+<p><code>ctype</code> : The FEC committee type. See more about committee types at the top of the page. Note that only some committee types are permitted to make independent expenditures.</p>
+<p><code>fec_id</code> : The FEC id of the committee by the independent expenditure. This is a nine-character code that begins with &#39;C&#39;.</p>
+<p><code>min_ies</code> : The minimum amount reported as having been spent by the committee on independent expenditures during the 2014 cycle.</p>
+<h4 id="outside-spenders-return-values">outside-spenders return values</h4>
+<p><code>fec_id</code> : The FEC id of the filing committee</p>
+<p><code>name</code> : The committee name.</p>
+<p><code>total_receipts</code> : Total receipts for this committee ceived during the entire cycle. </p>
+<p><code>total_disbursements</code> : Total disbursements by this committee ceived during the entire cycle</p>
+<p><code>outstanding_loans</code> : Total outstanding loans as of the cash_on_hand_date</p>
+<p><code>ctype</code> : The FEC defined committee type.</p>
+<p><code>total_indy_expenditures</code> : Total independent expenditures made this cycle.</p>
+<p><code>ie_support_dems</code> : The total amount of independent expenditures make to support Democratic candidates</p>
+<p><code>ie_oppose_dems</code> : The total amount of independent expenditures make to oppose Democratic candidates</p>
+<p><code>ie_support_reps</code> : The total amount of independent expenditures make to support Republican candidates</p>
+<p><code>ie_oppose_reps</code> : The total amount of independent expenditures make to oppose Republican candidates</p>
+<p><code>political_orientation</code> : The political orientation of the group, as coded by sunlight algorithms / researchers. This is only added for groups making independent expenditures.</p>
+<p><code>political_orientation_verified</code> : Check this box if the political orientation is correct</p>
+<p><code>display_type</code> : Check this box if the political orientation is correct</p>
+<p><code>committee_url</code> : Check this box if the political orientation is correct</p>
+<p><code>get_filtered_ie_url</code> : Check this box if the political orientation is correct</p>
+<p><code>display_coh</code> : Check this box if the political orientation is correct</p>
+<p><code>display_coh_date</code> : Check this box if the political orientation is correct</p>
+<p><code>major_activity</code> : Check this box if the political orientation is correct</p>
 
   </div>
 </div>
