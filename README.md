@@ -1,4 +1,4 @@
-# Realtime FEC API
+# Real-Time Federal Campaign Finance API
 
 
 ##Overview
@@ -34,10 +34,10 @@ All json API calls can be given a `page` parameter to dictate the page number of
 ##API Methods 
 
 
-###/new_filing/
+##/new_filing/
 Return summary info about electronic FEC filings 
 
-####Parameters
+###Parameters
 
 
 `format` : The format of the returned data. Default is json.
@@ -66,7 +66,7 @@ Return summary info about electronic FEC filings
 
 `is_superceded` : When an amended version of an older filing is received we consider the original to have been superseded. When set to false, show only the most recent versions of an electronic filing; when set to True, show only original filings which have since been amended.
 
-####new_filing return values
+###new_filing return values
 
 
 `fec_id` : The FEC id of the committee filing this report
@@ -114,10 +114,10 @@ Return summary info about electronic FEC filings
 `is_superceded` : Is this filing superceded by another filing, either a later amendment, or a periodic filing? This should be false for data returned through the API.
 
 
-###/independent-expenditures/
+##/independent-expenditures/
 Return information about independent expenditures reported to the FEC. Independent expenditures are campaign spending by outside groups that are not made in coordination with the candidate, but support or oppose someone running for office. They must be reported within 24 or 48 hours. Any domestic entity can make an independent expenditure in any amount they want, including corporations, unions and nonprofits. 
 
-####Parameters
+###Parameters
 
 
 `format` : The format of the returned data. Default is json.
@@ -144,7 +144,7 @@ Return information about independent expenditures reported to the FEC. Independe
 
 `candidate_party_checked` : A one digit code representing the party of the candidate targeted by the expenditure: 'D' for Democrat and 'R' for Republican. This value is often missing for third party candidates.
 
-####independent-expenditures return values
+###independent-expenditures return values
 
 
 `form_type` : The type of from this expenditure was reported on. See more about [FEC forms](http://www.fec.gov/info/forms.shtml).
@@ -214,10 +214,10 @@ Return information about independent expenditures reported to the FEC. Independe
 
 `short_office` : A short version of the district
 
-###/districts/
+##/districts/
 Summarize total spending by congressional district, including candidate spending and independent expenditures. Electioneering and 'communication cost' (promotion of candidates to members of a corporation or assocation) is not included. Also useful for retrieving IDs. 
 
-####Parameters
+###Parameters
 
 
 `format` : The format of the returned data. Default is json.
@@ -236,7 +236,7 @@ Summarize total spending by congressional district, including candidate spending
 
 `incumbent_party` : A one letter code for the incumbent's political party: 'D' for Democrat and 'R' for Republican. Angus King, independent Senator of Maine, is listed as 'I'
 
-####districts return values
+###districts return values
 
 
 `id` : An internal district id
@@ -279,10 +279,10 @@ Summarize total spending by congressional district, including candidate spending
 
 
 
-###/candidates/
+##/candidates/
 Returns information about candidates for federal office 
 
-####Parameters
+###Parameters
 
 
 `format` : The format of the returned data. Default is json.
@@ -307,7 +307,7 @@ Returns information about candidates for federal office
 
 `is_incumbent` : Is the candidate an incumbent?
 
-####candidates return values
+###candidates return values
 
 A candidate is a person running for a particular office, e.g. Joe Smith for Senate. If Joe Smith is currently a member of the house, receipts by his house committee will not be counted towards his senate campaign (until they are transferred to an candidate committee authorized to support his senate bid).
 
@@ -368,10 +368,10 @@ A candidate is a person running for a particular office, e.g. Joe Smith for Sena
 
 `outstanding_loans` : 
 
-###/committee/
+##/committee/
 Return summary information about a nonprofit that reports spending to the FEC or a PAC, including candidate committees, leadership PACs, joint fundraising committees, super PACs, hybrid super PACs party committees, corporate pacs, etc 
 
-####Parameters
+###Parameters
 
 
 `format` : The format of the returned data. Default is json.
@@ -390,7 +390,7 @@ Return summary information about a nonprofit that reports spending to the FEC or
 
 `min_coh` : The minimum cash on hand reported in the committee's most recent periodic filing.
 
-####committee return values
+###committee return values
 
 
 `fec_id` : The FEC id of the filing committee
@@ -423,10 +423,10 @@ Return summary information about a nonprofit that reports spending to the FEC or
 
 
 
-###/outside-spenders/
+##/outside-spenders/
 Return summary information about any outside spending group, including non-committees (which are typically nonprofits, but may include individuals, LLC's, corporations or unions) 
 
-####Parameters
+###Parameters
 
 
 `format` : The format of the returned data. Default is json.
@@ -441,7 +441,7 @@ Return summary information about any outside spending group, including non-commi
 
 `min_ies` : The minimum amount reported as having been spent by the committee on independent expenditures during the 2014 cycle.
 
-####outside-spenders return values
+###outside-spenders return values
 
 
 `fec_id` : The FEC id of the filing committee
